@@ -1,70 +1,111 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Image, Button, Pressable, Text } from "react-native";
+import images from "@/constants/images";
+import icons from "@/constants/icons";
+import BatteryProgress from "@/components/batteryProgress";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+const Mood = () => {
+  const handleSubmit = () => {
+    console.log("clicked");
+  };
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.moodContainer}>
+      <Image source={images.multiMoodLog} />
+
+      <View style={styles.section}>
+        {/* Context */}
+        <View style={styles.contextContainer}>
+          <Text style={styles.title}>Great job logging again today!</Text>
+
+          <Text style={styles.subTitle}>
+            While personalized hypotheses and suggestions are currently shared
+            just once per day,
+            <Text style={{ color: "#CAA360" }}>
+              {" "}
+              each mood log helps refine your profile
+            </Text>{" "}
+            for even more tailored insights in the future.
+          </Text>
+
+          <Text style={styles.moodTitle}>
+            Consider your ‘Mood check-in’ battery boosted!
+          </Text>
+        </View>
+
+        {/* Battery */}
+        {/* <View style={styles.batteryImage}>
+          <Image source={images.moodBattery} style={styles.batteryImage} />
+
+          <View style={styles.moodBatteryContext}>
+            <Image source={icons.smiley} style={styles.smileyIcon} />
+          </View>
+        </View> */}
+        <BatteryProgress />
+      </View>
+
+      {/* Continue Button */}
+      <Pressable style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>CONTINUE</Text>
+      </Pressable>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  moodContainer: {
+    flex: 1,
+    backgroundColor: "#10141E",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  section: {
+    paddingHorizontal: 12,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  contextContainer: {
+    padding: 12,
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    gap: 24,
+    marginBottom: 32,
+  },
+  title: {
+    color: "#DADADA",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  subTitle: {
+    color: "#DADADA",
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+  },
+  moodTitle: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    lineHeight: 27,
+    textAlign: "center",
+    marginHorizontal: 8,
+  },
+
+  batteryImage: {},
+  moodBatteryContext: {
+    padding: 8,
+  },
+
+  button: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#4E9ACD",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    marginTop: "auto",
+  },
+  buttonText: {
+    color: "#111C23",
+    fontSize: 18,
   },
 });
+
+export default Mood;
